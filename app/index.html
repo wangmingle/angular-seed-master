@@ -5,16 +5,31 @@
   <title>My AngularJS App</title>
   <link rel="stylesheet" href="css/app.css"/>
 </head>
-<body>
+<body ng-controller="PhoneListCtrl2">
   <ul class="menu">
     <li><a href="#/view1">view1</a></li>
     <li><a href="#/view2">view2</a></li>
+    <li><a href="#/view3">view3</a></li>
   </ul>
 
   <div ng-view></div>
 
   <div>Angular seed app: v<span app-version></span></div>
+  <p>Total number of phones: {{phones.length}}</p>
+Search: <input ng-model="query">
+Sort by:
+<select ng-model="orderProp">
+  <option value="name">Alphabetical</option>
+  <option value="age">Newest</option>
+</select>
 
+
+<ul class="phones">
+  <li ng-repeat="phone in phones | filter:query | orderBy:orderProp">
+    {{phone.name}}
+    <p>{{phone.snippet}}</p>
+  </li>
+</ul>
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
   -->
