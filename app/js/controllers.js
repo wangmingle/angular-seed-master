@@ -29,11 +29,26 @@ function PhoneListCtrl($scope) {
     $scope.orderProp = 'age';
 }
 
-function PhoneListCtrl2($scope, $http) {
-    $http.get('phones/phones.json').success(function(data) {
-        $scope.phones = data;
-    });
+function PhoneListCtrl2($scope, Phone) {
+    // $http.get('phones/phones.json').success(function(data) {
+    //     $scope.phones = data;
+    // });
+    $scope.phones = Phone.query();
 
     $scope.orderProp = 'age';
 }
-PhoneListCtrl.$inject = ['$scope', '$http'];
+PhoneListCtrl.$inject = ['$scope', 'Phone'];
+
+function PhoneDetailCtrl($scope, $routeParams, $http) {
+    $http.get('phones/' + $routeParams.phoneId + '.json').success(function(data) {
+        $scope.phone = data;
+        $scope.mainImageUrl = data.images[0];
+    });
+
+    $scope.setImage = function(imageUrl) {
+        $scope.mainImageUrl = imageUrl;
+    }
+    // $scope.phoneId = $routeParams.phoneId;
+}
+
+PhoneDetailCtrl.$inject = ['$scope', '$routeParams', '$http'];
